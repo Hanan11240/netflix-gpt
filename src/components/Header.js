@@ -22,7 +22,7 @@ const handleSignOut = ()=>{
     })
 }
 useEffect(()=>{
-    onAuthStateChanged(auth,(user)=>{
+   const unsubscribe= onAuthStateChanged(auth,(user)=>{
         if(user){
             const {uid,email,displayName} = user;
             dispatch(addUser({uid,email,displayName}));
@@ -33,6 +33,8 @@ useEffect(()=>{
 
         }
     })
+    // unsubscribe when component unmounts
+    return () => unsubscribe();
 },[])
         return(
             <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex justify-between items-center ">
