@@ -16,6 +16,7 @@ const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch()
     const user = useSelector(store => store.user);
+    const isGptSearch = useSelector(store=>  store.gpt.showGptSearch)
 
     const handleLanguageChange = (event)=>{
         const selectedLanguage = event?.target?.value;
@@ -53,11 +54,11 @@ const Header = () => {
             <div className="flex items-center">
                 {user &&
                     <div>
-                        <select className="py-2 px-4 bg-gray-500 text-white" onChange={handleLanguageChange}>
+                        { isGptSearch && <select className="py-2 px-4 bg-gray-500 text-white" onChange={handleLanguageChange}>
                            { SUPPORTED_LANGUAGES.map((lang)=><option key={lang.identifier} value={lang.identifier}>{lang.name}</option>) }
                             
-                        </select>
-                        <button className="py-2  px-4 mx-2 bg-purple-500 rounded-lg text-white" onClick={handleGptSearch}>GPT Search</button>
+                        </select>}
+                        <button className="py-2  px-4 mx-2 bg-purple-500 rounded-lg text-white" onClick={handleGptSearch}>{isGptSearch?'Home':'GPT Search'}</button>
                         <span className="mr-2 font-bold text-white">{user?.displayName ? user?.displayName : 'Guest'}</span>
 
                         <button onClick={handleSignOut} className="font-bold text-white">Sign out</button>
